@@ -10,71 +10,111 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include<stdbool.h>
+#include<stdio.h>
 
-int is_safe(board, row, j)
+bool check_col(int i, int j, int grid[10][10])
 {
-	while( row != 0)
+	int a = i;
+	while (a > 0)
 	{
-		if (board[row][j] == 1)
+		a--;
+		if (grid[a][j] == 1)
+			return false;
+	}
+	while (i < 10)
+	{
+		if (grid[i][j] == 1)
+			return false;
+		i++;
+	}
+	return true;
+
+}
+
+bool check_diago(int i, int j, int grid[10][10])
+{
+	//improve code :
+	int direction[2][2] = {{-1, -1}, {-1, 1}};
+	int a;
+	int b;
+
+	for (int d = 0; d<2; d++)
+	{
+		a = i;
+		b = j;
+		while(a >= 0 && a < 10 && b >= 0 && b < 10)
 		{
-			return 0;
+			if (grid[a][b] == 1)
+				return false;
+			a += direction[d][0];
+			b += direction[d][1];
 		}
-		row--;
 	}
+	return true;
+}
+bool is_safe(int i, int j, int grid[10][10])
+{
+	if (!check_col(i, j, grid) || !check_diago(i, j, grid))
+		return false;
+	return true;
 }
 
-
-
-
-int rev(row,board)
+int place(int grid[10][10], int position_line)
 {
-	int	j;
-	int possibility;
-
-	possibility = 0;
-	j = 0;
-	if (row == 10)
-		return 1;
-	else
-	{
-		while(j < 10)
-		{
-			if (is_safe(board, row, j) == 1)
-			{
-				board[row][i] = 1;
-				possibility += rev(row + 1,board);
-				board[row][i] = 0;
-
-			}
-		}	
-		return possibility;
-	}
-}
-
-int ft_ten_queens_puzzle(void)
-{
-	int board[10][10] = { 
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-	int row = 0;	
-	int number;
+	int l = 0;
+	int j = -1;
 	
-	number = rev(row,board)
-	return number;
+	int nb = 0;
+	
+	if (position_line == 10)
+	{
+		for (int v = 0; v < 10; v++)
+		{
+			for (int w = 0; w < 10; w++)	
+			{
+				if(grid[v][w] == 1)
+				{
+					printf("%d",w);
+				}
+			}
+		}
+		printf("\n");
+		return 1;
+	}
+	while (l < 10)
+	{
+		if (is_safe(position_line,l,grid))
+		{
+			grid[position_line][l] = 1;
+			nb += place(grid,position_line + 1);
+			grid[position_line][l] = 0;
+		}
+		l++;
+
+	}
+	return nb;
 }
 
 
 int main(void)
 {
-	printf("%d",ft_ten_queens_puzzle());
-	return 0;
+	int grid[10][10] = {
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0},
+	};
+	int nb = 0;
+	int len = 10;
+	nb = place(grid,0);
+	
+	printf("%d",nb);
+
 }

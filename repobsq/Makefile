@@ -1,7 +1,7 @@
 NAME = bsq
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-SRC = find_square.c matrice.c transcription.c main.c header.h check_map.c
+SRC = find_square.c matrice.c transcription.c main.c check_map.c
 OBJ = $(SRC:.c=.o)
 NAME = bsq
 

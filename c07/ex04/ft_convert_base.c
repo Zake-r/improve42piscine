@@ -118,11 +118,9 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	ptr = ft_base(nombre, base_to, &count, signe);
 	return (ptr - count);
 }
-/*
 #include<stdio.h>
-int main(void)
+int main(int argc, char *argv[])
 {
-	printf("%s",ft_convert_base("--+42ab","0123456789","01"));
+	printf("%s",ft_convert_base(argv[1],"01"," !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"));
 
 }
-*/
